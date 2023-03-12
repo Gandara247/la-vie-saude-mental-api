@@ -1,4 +1,4 @@
-const Pacientes = require("../models/Pacientes");
+const {Pacientes} = require("../models/Pacientes");
 const pacienteController = {
     listarPaciente: async(req, res) => {
         const listarPacientes = await Pacientes.findAll();
@@ -6,13 +6,14 @@ const pacienteController = {
     },
 
     async cadastrarPaciente(req, res) {
-        const {nome, email, telefone, cpf, senha} = req.body;
+        const {nome, email, telefone, cpf, senha, id_paciente} = req.body;
         const novoPaciente = await Pacientes.create({
             nome,
             email,
             telefone,
             cpf,
             senha,
+            id_paciente,
         });
 
         res.json(novoPaciente)
