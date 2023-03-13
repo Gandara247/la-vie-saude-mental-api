@@ -38,7 +38,7 @@ const Atendimentos = db.define("Atendimentos", {
     },    
 
 }, {
-    tableName: "atendimentos",
+    tableName: "atendimento",
 });
 
 module.exports= Atendimentos;

@@ -1,4 +1,4 @@
-const {Psicologos} = require("../models/Psicologos");
+const {Psicologos} = require("../models/index");
 const psicologoController = {
     listarPsicologo: async(req, res) => {
         const listarPsicologos = await Psicologos.findAll();
@@ -6,13 +6,12 @@ const psicologoController = {
     },
 
     async cadastrarPsicologo(req, res) {
-        const {nome, email, senha, cpf, id_psicologo} = req.body;
+        const {nome, email, senha, cpf} = req.body;
         const novoPsicologo = await Psicologos.create({
             nome,
             email,
             senha,
-            cpf,
-            id_psicologo,
+            cpf,            
         });
 
         res.json(novoPsicologo)
@@ -30,13 +29,12 @@ const psicologoController = {
 
     async atualizarPsicologo (req, res){
         const {id} = req.params;
-        const {nome, email, senha, cpf, id_psicologo} = req.body;
+        const {nome, email, senha, cpf} = req.body;
         const psicologoAtualizado = await Psicologos.update({
             nome,
             email,
             senha,
-            cpf,
-            id_psicologo,
+            cpf,            
         },
         {
             where: {
