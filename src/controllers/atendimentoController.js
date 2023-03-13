@@ -47,4 +47,4 @@ const atendimentoController = {
     },
 };
 
-module.exports = atendimentoController;
+module.exports = atendimentoController;;
