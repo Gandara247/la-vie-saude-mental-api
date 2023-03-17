@@ -1,4 +1,4 @@
-const {Pacientes} = require("../models");
+const {Psicologos} = require("../models");
 const jwt = require("jsonwebtoken");
 const secret = require("../configs/secret")
 const bcrypt = require("bcryptjs");
@@ -6,22 +6,22 @@ const bcrypt = require("bcryptjs");
 const AuthController = {
     async login(req, res){
      const {email, senha}  = req.body;
-     const paciente = await Pacientes.findOne({
+     const psicologo = await Psicologos.findOne({
         where: {
             email,
         },
      });
-     if(!paciente){
+     if(!psicologo){
         return res.status(400).json("E-mail ou senha inválido, verifique e tente novamente")
      }
-     if(!bcrypt.compareSync(senha, paciente.senha)){
+     if(!bcrypt.compareSync(senha, psicologo.senha)){
         return res.status(401).json("E-mail ou senha inválido, verifique e tente novamente");
      }
 
      const token = jwt.sign({
-        id: paciente.id,
-        email: paciente.email,
-        nome: paciente.nome,
+        id: psicologo.id,
+        email: psicologo.email,
+        nome: psicologo.nome,
      },
      secret.key
      )

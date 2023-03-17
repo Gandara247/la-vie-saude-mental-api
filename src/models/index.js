@@ -6,9 +6,17 @@ Atendimentos.belongsTo(Pacientes, {
     foreignKey: "id_paciente",
 });
 
+// Pacientes.hasMany(Atendimentos, {
+//     foreignKey: "id_paciente",
+// });
+
 Atendimentos.belongsTo(Psicologos, {
     foreignKey: "id_psicologo",
 });
+
+// Psicologos.hasMany(Atendimentos, {
+//     foreignKey: "id_psicologo",
+// });
 
 
 

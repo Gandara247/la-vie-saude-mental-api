@@ -17,7 +17,7 @@ const Psicologos = db.define("Psicologos", {
     senha:{
         type: DataTypes.STRING
     },
-    cpf:{
+    apresentacao:{
         type: DataTypes.STRING
     }, 
     createdAt:{
