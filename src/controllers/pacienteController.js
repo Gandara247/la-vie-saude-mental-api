@@ -21,6 +21,7 @@ const pacienteController = {
     },
 
     async cadastrarPaciente(req, res) {
+        console.log(req.user);
         const { nome, email, idade } = req.body;
         const novoPaciente = await Pacientes.create({
             nome,
