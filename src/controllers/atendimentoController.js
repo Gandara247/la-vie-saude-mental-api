@@ -2,9 +2,18 @@ const {Atendimentos, Pacientes, Psicologos} = require("../models/index");
 const atendimentoController = {
     listarAtendimento: async(req, res) => {
         const listarAtendimentos = await Atendimentos.findAll({
-            include: Pacientes
+                include: [{
+                    model: Pacientes,
+                    require: true
+                },
+                {
+                    model: Psicologos,
+                    require: true
+                }
+                ]
+           
         });
-        res.json(listarAtendimentos);
+        res.status(200).json(listarAtendimentos);
     },
 
     async cadastrarAtendimento(req, res) {
@@ -27,7 +36,7 @@ const atendimentoController = {
                 id,
             }
         });
-        res.status(204).json("Deletado!")
+        res.status(200).json("Deletado!")
 
         }catch{
             return res.status(500).json("Deu ruim")

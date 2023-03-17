@@ -2,7 +2,7 @@ const {Pacientes} = require("../models/index");
 const pacienteController = {
     listarPaciente: async(req, res) => {
         const listarPacientes = await Pacientes.findAll();
-        res.json(listarPacientes);
+        res.status(200).json(listarPacientes);
     },
 
     listarPacienteID: async (req, res) => {
@@ -11,7 +11,7 @@ const pacienteController = {
         const listarPacientePorId = await Pacientes.findByPk(id)
         res.status(200).json(listarPacientePorId)
 
-        }catch(error){
+        } catch (error){
             return res.status(401).json("ID não encontrado")
         }        
            
@@ -38,7 +38,7 @@ const pacienteController = {
                 id,
             }
         });
-        res.status(204).json("Deletado!")
+        res.status(200).json("Deletado!")
 
         }catch(error) {
             return res.status(500).json("Deu ruim")
@@ -61,7 +61,8 @@ const pacienteController = {
                 id,
             },
         })
-        res.status(204).json("Dados atualizados!")
+        res.status(200).json("Atualizado")
+        
     },
 };
 
