@@ -35,23 +35,20 @@ const pacienteController = {
         res.status(201).json(novoPaciente)
     },
 
-    async deletarPaciente (req, res){
-        try{
-            const {id} = req.params;
-        await Pacientes.destroy({
-            where: {
-                id,
-            }
-        });
-        if (!id){
-            throw new Error("ID não encontrado!")
-        }
-        res.status(200).json("Deletado!")
-
-        }catch(error) {
-            return res.status(404).json(error.message)
-        }     
-    },
+    async deletarPaciente (req, res) {
+        try {
+          const {id} = req.params;
+          const linhasAfetadas = await Pacientes.destroy({where: {id}});
+          if (linhasAfetadas === 0) {
+            res.status(404).json({message: 'Paciente não encontrado.'});
+          } else {
+            res.json({message: 'Paciente deletado!'});
+          }
+        } catch (error) {
+          console.error(error);
+          res.status(500).json({message: 'Erro interno no servidor.'});
+        }
+      },
 
     async atualizarPaciente (req, res){
         const {id} = req.params;

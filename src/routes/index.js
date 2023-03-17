@@ -2,12 +2,15 @@ const express = require("express");
 const pacienteController = require("../controllers/pacienteController");
 const psicologoController = require("../controllers/psicologoController");
 const atendimentoController = require("../controllers/atendimentoController");
-const pacienteValidation = require("../validatios/pacientes/create")
+const authController = require("../controllers/authController")
+const pacienteValidation = require("../validations/pacientes/create")
+const authLoginValidation = require("../validations/auth/login")
 const routes = express.Router();
 
 routes.get("/pacientes", pacienteController.listarPaciente);
 routes.get("/pacientes/:id", pacienteController.listarPacienteID);
 routes.post("/pacientes", pacienteValidation, pacienteController.cadastrarPaciente);
+routes.post("/login", authLoginValidation, authController.login);
 routes.delete("/pacientes/:id", pacienteController.deletarPaciente);
 routes.put("/pacientes/:id", pacienteController.atualizarPaciente);
 
