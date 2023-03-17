@@ -2,23 +2,35 @@ const express = require("express");
 const pacienteController = require("../controllers/pacienteController");
 const psicologoController = require("../controllers/psicologoController");
 const atendimentoController = require("../controllers/atendimentoController");
+const authController = require("../controllers/authController");
+const pacienteValidation = require("../validations/pacientes/create");
+const psicologoValidation = require("../validations/psicologos/create");
+const atendimentoValidation = require("../validations/atendimentos/create");
+const authLoginValidation = require("../validations/auth/login");
+const auth = require("../middlewares/auth")
 const routes = express.Router();
 
-routes.get("/paciente/listar", pacienteController.listarPaciente);
-routes.post("/paciente/cadastrar", pacienteController.cadastrarPaciente);
-routes.delete("/paciente/:id/deletar", pacienteController.deletarPaciente);
-routes.put("/paciente/:id/atualizar", pacienteController.atualizarPaciente);
+routes.get("/pacientes", pacienteController.listarPaciente);
+routes.get("/pacientes/:id", pacienteController.listarPacienteID);
+routes.post("/pacientes", auth, pacienteValidation, pacienteController.cadastrarPaciente);
+routes.delete("/pacientes/:id", pacienteController.deletarPaciente);
+routes.put("/pacientes/:id", pacienteController.atualizarPaciente);
 
 
-routes.get("/psicologo/listar", psicologoController.listarPsicologo);
-routes.post("/psicologo/cadastrar", psicologoController.cadastrarPsicologo);
-routes.delete("/psicologo/:id/deletar", psicologoController.deletarPsicologo);
-routes.put("/psicologo/:id/atualizar", psicologoController.atualizarPsicologo);
+routes.get("/psicologos", psicologoController.listarPsicologo);
+routes.get("/psicologos/:id", psicologoController.listarPsicologoID);
+routes.post("/psicologos", auth, psicologoValidation, psicologoController.cadastrarPsicologo);
+routes.post("/login", authLoginValidation, authController.login);
+routes.post("/psicologos", psicologoController.cadastrarPsicologo);
+routes.delete("/psicologos/:id", psicologoController.deletarPsicologo);
+routes.put("/psicologos/:id", psicologoController.atualizarPsicologo);
 
-routes.get("/atendimento/listar", atendimentoController.listarAtendimento);
-routes.post("/atendimento/cadastrar", atendimentoController.cadastrarAtendimento);
-routes.delete("/atendimento/:id/deletar", atendimentoController.deletarAtendimento);
-routes.put("/atendimento/:id/atualizar", atendimentoController.atualizarAtendimento);
+routes.get("/atendimentos", atendimentoController.listarAtendimento);
+routes.get("/atendimentos/:id", atendimentoController.listarAtendimentoID);
+routes.post("/atendimentos", auth, atendimentoValidation, atendimentoController.cadastrarAtendimento);
+routes.post("/atendimentos", atendimentoController.cadastrarAtendimento);
+routes.delete("/atendimentos/:id", atendimentoController.deletarAtendimento);
+routes.put("/atendimentos/:id", atendimentoController.atualizarAtendimento);
 
 
 module.exports = routes;

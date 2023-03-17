@@ -2,48 +2,79 @@ const {Atendimentos, Pacientes, Psicologos} = require("../models/index");
 const atendimentoController = {
     listarAtendimento: async(req, res) => {
         const listarAtendimentos = await Atendimentos.findAll({
-            include: Pacientes
+                include: [{
+                    model: Pacientes,
+                    require: true
+                },
+                {
+                    model: Psicologos,
+                    require: true
+                }
+                ]
+           
         });
-        res.json(listarAtendimentos);
+        res.status(200).json(listarAtendimentos);
+    },
+
+    listarAtendimentoID: async (req, res) => {
+        try {
+            const { id } = req.params
+            const listarAtendimentoPorId = await Atendimentos.findByPk(id)
+            if (!listarAtendimentoPorId) {
+                throw new Error("ID não encontrado")
+            }
+            res.status(200).json(listarAtendimentoPorId)
+
+        } catch (error) {
+            return res.status(404).json(error.message)
+        }
+
     },
 
     async cadastrarAtendimento(req, res) {
-        const {data_atendimento, valor_consulta, id_psicologo, id_paciente} = req.body;
+        const {id_paciente, data_atendimento, observacao, id_psicologo, } = req.body;
         const novoAtendimento = await Atendimentos.create({
-            data_atendimento,
-            valor_consulta,
-            id_psicologo,
             id_paciente,
+            data_atendimento,
+            observacao,
+            id_psicologo,            
         });
 
-        res.json(novoAtendimento)
+        res.status(200).json(novoAtendimento)
     },
 
     async deletarAtendimento (req, res){
-        const {id} = req.params;
+        try{
+            const {id} = req.params;
         await Atendimentos.destroy({
             where: {
                 id,
             }
         });
-        res.json("Atendimento deletado!")
+        res.status(200).json("Deletado!")
+
+        }catch{
+            return res.status(500).json("Deu ruim")
+        }
+        
     },
 
     async atualizarAtendimento (req, res){
         const {id} = req.params;
-        const {data_atendimento, valor_consulta, id_psicologo, id_paciente}  = req.body;
+        const {id_paciente, data_atendimento, observacao, id_psicologo,}  = req.body;
+        if (!id) return res.status(400).json("id não enviado");
         const atendimentoAtualizado = await Atendimentos.update({
-            data_atendimento,
-            valor_consulta,
-            id_psicologo,
             id_paciente,
+            data_atendimento,
+            observacao,
+            id_psicologo,            
         },
         {
             where: {
                 id,
             },
         })
-        res.json("Dados atualizados!")
+        res.status(204).json("Dados atualizados!")
     },
 };
 
