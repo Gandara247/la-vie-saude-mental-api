@@ -5,6 +5,7 @@ const atendimentoController = require("../controllers/atendimentoController");
 const routes = express.Router();
 
 routes.get("/pacientes", pacienteController.listarPaciente);
+routes.get("/pacientes/:id", pacienteController.listarPacienteID);
 routes.post("/pacientes", pacienteController.cadastrarPaciente);
 routes.delete("/pacientes/:id", pacienteController.deletarPaciente);
 routes.put("/pacientes/:id", pacienteController.atualizarPaciente);

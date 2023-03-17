@@ -5,6 +5,18 @@ const pacienteController = {
         res.json(listarPacientes);
     },
 
+    listarPacienteID: async (req, res) => {
+        try{
+            const {id} = req.params
+        const listarPacientePorId = await Pacientes.findByPk(id)
+        res.status(200).json(listarPacientePorId)
+
+        }catch(error){
+            return res.status(401).json("ID não encontrado")
+        }        
+           
+    },
+
     async cadastrarPaciente(req, res) {
         const {nome, email, telefone, cpf, senha} = req.body;
         const novoPaciente = await Pacientes.create({
