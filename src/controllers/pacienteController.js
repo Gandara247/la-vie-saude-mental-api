@@ -9,10 +9,13 @@ const pacienteController = {
         try{
             const {id} = req.params
         const listarPacientePorId = await Pacientes.findByPk(id)
+        if (!listarPacientePorId){
+            throw new Error("ID não encontrado")
+        }
         res.status(200).json(listarPacientePorId)
 
         } catch (error){
-            return res.status(401).json("ID não encontrado")
+            return res.status(404).json(error.message)
         }        
            
     },
@@ -38,10 +41,13 @@ const pacienteController = {
                 id,
             }
         });
+        if (!id){
+            throw new Error("ID não encontrado!")
+        }
         res.status(200).json("Deletado!")
 
         }catch(error) {
-            return res.status(500).json("Deu ruim")
+            return res.status(404).json(error.message)
         }     
     },
 
