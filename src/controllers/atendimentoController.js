@@ -16,22 +16,29 @@ const atendimentoController = {
             id_paciente,
         });
 
-        res.json(novoAtendimento)
+        res.status(200).json(novoAtendimento)
     },
 
     async deletarAtendimento (req, res){
-        const {id} = req.params;
+        try{
+            const {id} = req.params;
         await Atendimentos.destroy({
             where: {
                 id,
             }
         });
-        res.json("Atendimento deletado!")
+        res.status(204).json("Deletado!")
+
+        }catch{
+            return res.status(500).json("Deu ruim")
+        }
+        
     },
 
     async atualizarAtendimento (req, res){
         const {id} = req.params;
         const {data_atendimento, valor_consulta, id_psicologo, id_paciente}  = req.body;
+        if (!id) return res.status(400).json("id não enviado");
         const atendimentoAtualizado = await Atendimentos.update({
             data_atendimento,
             valor_consulta,
@@ -43,7 +50,7 @@ const atendimentoController = {
                 id,
             },
         })
-        res.json("Dados atualizados!")
+        res.status(204).json("Dados atualizados!")
     },
 };
 

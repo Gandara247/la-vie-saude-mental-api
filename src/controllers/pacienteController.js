@@ -15,22 +15,28 @@ const pacienteController = {
             senha,            
         });
 
-        res.json(novoPaciente)
+        res.status(200).json(novoPaciente)
     },
 
     async deletarPaciente (req, res){
-        const {id} = req.params;
+        try{
+            const {id} = req.params;
         await Pacientes.destroy({
             where: {
                 id,
             }
         });
-        res.json("Paciente deletado!")
+        res.status(204).json("Deletado!")
+
+        }catch(error) {
+            return res.status(500).json("Deu ruim")
+        }     
     },
 
     async atualizarPaciente (req, res){
         const {id} = req.params;
         const {nome, email, telefone, cpf, senha,} = req.body;
+        if (!id) return res.status(400).json("id não enviado");
         const pacienteAtualizado = await Pacientes.update({
             nome,
             email,
@@ -43,7 +49,7 @@ const pacienteController = {
                 id,
             },
         })
-        res.json("Dados atualizados!")
+        res.status(204).json("Dados atualizados!")
     },
 };
 

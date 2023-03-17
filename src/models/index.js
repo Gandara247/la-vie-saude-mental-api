@@ -7,7 +7,7 @@ Atendimentos.belongsTo(Pacientes, {
 });
 
 Atendimentos.belongsTo(Psicologos, {
-    foreignKey: "id_paciente",
+    foreignKey: "id_psicologo",
 });
 
 
