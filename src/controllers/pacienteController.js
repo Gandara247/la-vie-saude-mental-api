@@ -1,4 +1,5 @@
 const {Pacientes} = require("../models/index");
+const bcrypt = require("bcryptjs");
 const pacienteController = {
     listarPaciente: async(req, res) => {
         const listarPacientes = await Pacientes.findAll();
@@ -22,15 +23,16 @@ const pacienteController = {
 
     async cadastrarPaciente(req, res) {
         const {nome, email, telefone, cpf, senha} = req.body;
+        const novaSenha = bcrypt.hashSync(senha, 10); 
         const novoPaciente = await Pacientes.create({
             nome,
             email,
             telefone,
             cpf,
-            senha,            
+            senha:novaSenha,            
         });
 
-        res.status(200).json(novoPaciente)
+        res.status(201).json(novoPaciente)
     },
 
     async deletarPaciente (req, res){
