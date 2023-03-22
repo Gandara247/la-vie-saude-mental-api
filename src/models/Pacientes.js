@@ -14,16 +14,9 @@ const Pacientes = db.define("Pacientes", {
     email:{
         type: DataTypes.STRING
     },
-    telefone:{
-        type: DataTypes.STRING
-    },
-    cpf:{
-        type: DataTypes.STRING
-    },
-    
-    senha:{
-        type: DataTypes.STRING
-    },
+    idade:{
+        type: DataTypes.DATE
+    }, 
     
     createdAt:{
         type: DataTypes.DATE
