@@ -1,4 +1,4 @@
-Clínica La-Vie
+## Clínica La-Vie
 
 Projeto com o objetivo de criar uma API utilizando MySQL, Node.js e Express.js. 
 
